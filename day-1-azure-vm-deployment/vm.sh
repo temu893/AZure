@@ -1,1 +1,6 @@
-az vm create --name VM-2 --resource-group TemDevOps --admin-username T**** --admin-password V****** --image MicrosoftWindowsServer:WindowsServer:2022-datacenter-azure-edition-core:latest
+az vm create \
+  --name <VM-NAME> \
+  --resource-group <RESOURCE-GROUP> \
+  --admin-username <USERNAME> \
+  --admin-password <STRONG_PASSWORD> \
+  --image MicrosoftWindowsServer:WindowsServer:2022-datacenter-core:latest
