@@ -1,2 +1,0 @@
-# AZure
-AZ-DevOps journey  
