@@ -10,7 +10,18 @@ az vm create \
   --image MicrosoftWindowsServer:WindowsServer:2022-datacenter-core:latest
 
 **Note**: For security, sensitive information such as usernames, passwords, resource group names, and VM names are represented with placeholders (e.g., `<USERNAME>`, `<STRONG_PASSWORD>`, `<RESOURCE-GROUP>`, `<VM-NAME>`). Replace these with your actual values when using the commands.
-### Challenge Faced
-While creating the VM, I faced difficulty finding the correct image. To address this, I used the following command to list available images from the specified publisher and offer, then selected an appropriate image from the list:
 
-az vm image list --publisher MicrosoftWindowsServer --offer WindowsServer
+### Challenge Faced: Identifying Correct VM Image
+
+**Problem:**  
+While deploying the VM via Azure CLI, I encountered an issue selecting the correct image reference. The initial command failed because I didn’t know the exact image URN required by Azure.
+
+**Cause:**  
+Azure CLI requires precise image identifiers, and "latest" is only valid if the publisher/offer/sku are correctly specified. Azure does not provide an obvious list in the error message.
+
+**Solution:**  
+I used the following command to query available images from the Microsoft Windows Server publisher:
+
+```bash
+az vm image list --publisher MicrosoftWindowsServer --offer WindowsServer --output table
+
