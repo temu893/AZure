@@ -2,8 +2,6 @@ name: Terraform CI/CD
 
 on:
   pull_request:
-    paths:
-      - '**.tf'
   push:
     branches:
       - main
@@ -22,7 +20,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./Day-4-Automate-Terraform-with-GitHub-Actions/main.tf
+        working-directory: ./Day-4-Automate-Terraform-with-GitHub-Actions
 
     steps:
       - name: Checkout code
