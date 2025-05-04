@@ -123,3 +123,4 @@ resource "azurerm_windows_virtual_machine""vm"{
   # trigger plan
 # Force GitHub Actions again
 # Force GitHub Actions again
+# trigger workflow
