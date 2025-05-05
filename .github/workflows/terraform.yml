@@ -49,8 +49,11 @@ jobs:
           terraform apply -auto-approve \
             -var="subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}" \
             -var="tenant_id=${{ secrets.ARM_TENANT_ID }}" \
-            -var="admin_ip=${{ secrets.ADMIN_IP }}"
+            -var="admin_ip=${{ secrets.ADMIN_IP }}" \
+            -var="admin_username=${{ secrets.ADMIN_USERNAME }}" \
+            -var="admin_password=${{ secrets.ADMIN_PASSWORD }}"
         timeout-minutes: 15
+      
       
       
       
