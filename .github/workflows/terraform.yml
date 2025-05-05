@@ -48,8 +48,11 @@ jobs:
         run: |
           terraform apply -auto-approve \
             -var="subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}" \
-            -var="tenant_id=${{ secrets.ARM_TENANT_ID }}"
+            -var="tenant_id=${{ secrets.ARM_TENANT_ID }}" \
+            -var="admin_ip=${{ secrets.ADMIN_IP }}"
         timeout-minutes: 15
+      
+      
       
       
 
