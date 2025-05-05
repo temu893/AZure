@@ -45,9 +45,11 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve \
-          -var="subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}" \
-          -var="tenant_id=${{ secrets.ARM_TENANT_ID }}"
+        run: |
+          terraform apply -auto-approve \
+            -var="subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}" \
+            -var="tenant_id=${{ secrets.ARM_TENANT_ID }}"
         timeout-minutes: 15
+      
       
 
