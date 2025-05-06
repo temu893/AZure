@@ -67,4 +67,4 @@ Backend init asked to migrate state
 
 
 👨‍💻 Author
-Built by @temu893 as part of a Cloud/DevOps learning challenge.
+Built by @temu893 as part of a Cloud/DevOps learning challenge
