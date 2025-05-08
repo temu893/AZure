@@ -43,8 +43,21 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        if: github.event_name == 'pull_request'
-        run: terraform plan
+        run: |
+          terraform plan \
+            -var="subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}" \
+            -var="tenant_id=${{ secrets.ARM_TENANT_ID }}" \
+            -var="admin_ip=${{ secrets.ADMIN_IP }}" \
+            -var="admin_username=${{ secrets.ADMIN_USERNAME }}" \
+            -var="admin_password=${{ secrets.ADMIN_PASSWORD }}" \
+            -var="vnet_cidr=10.0.0.0/16" \
+            -var="web_subnet_cidr=10.0.1.0/24" \
+            -var="app_subnet_cidr=10.0.2.0/24" \
+            -var="db_subnet_cidr=10.0.3.0/24" \
+            -var="resource_group_name=TemDevOps-Dev"
+      
+
+      
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
@@ -54,8 +67,13 @@ jobs:
             -var="tenant_id=${{ secrets.ARM_TENANT_ID }}" \
             -var="admin_ip=${{ secrets.ADMIN_IP }}" \
             -var="admin_username=${{ secrets.ADMIN_USERNAME }}" \
-            -var="admin_password=${{ secrets.ADMIN_PASSWORD }}"
-        timeout-minutes: 15
+            -var="admin_password=${{ secrets.ADMIN_PASSWORD }}" \
+            -var="vnet_cidr=10.0.0.0/16" \
+            -var="web_subnet_cidr=10.0.1.0/24" \
+            -var="app_subnet_cidr=10.0.2.0/24" \
+            -var="db_subnet_cidr=10.0.3.0/24" \
+            -var="resource_group_name=TemDevOps-Dev"
+        timeout-minutes: 20
       
       
       
