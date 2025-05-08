@@ -42,8 +42,16 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
+
       - name: Terraform Plan
-        run: terraform plan
+        run: |
+          terraform plan \
+            -var="subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}" \
+            -var="tenant_id=${{ secrets.ARM_TENANT_ID }}" \
+            -var="admin_ip=${{ secrets.ADMIN_IP }}" \
+            -var="admin_username=${{ secrets.ADMIN_USERNAME }}" \
+            -var="admin_password=${{ secrets.ADMIN_PASSWORD }}"
+      
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
