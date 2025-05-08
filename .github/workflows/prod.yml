@@ -1,4 +1,4 @@
-name: Terraform CI/CD
+name: Terraform Prod CI/CD
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./day-4-Automate-Terraform-with-GitHub-Actions
+        working-directory: ./day-7-webapp-architecture/prod
 
     steps:
       - name: Checkout code

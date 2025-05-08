@@ -1,9 +1,12 @@
-name: Terraform CI/CD
+name: Terraform Dev CI/CD
 
 on:
   push:
     branches:
-      - main
+      - dev
+  pull_request:
+    branches:
+      - dev
 
 env:
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
@@ -19,7 +22,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./day-4-Automate-Terraform-with-GitHub-Actions
+        working-directory: ./day-7-webapp-architecture/dev
 
     steps:
       - name: Checkout code
