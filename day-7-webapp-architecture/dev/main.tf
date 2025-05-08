@@ -49,28 +49,27 @@ resource "azurerm_network_interface" "vm_nic" {
 
 # LINUX VM IN WEB SUBNET
 
-resource "azurerm_linux_virtual_machine" "web_v," {
-  name = "vm_web"
+resource "azurerm_linux_virtual_machine" "web_vm" {
+  name                = "vm-web"
   resource_group_name = azurerm_resource_group.rg.name
-  location = var.location
-  size = "Standard_B1s"
-  admin_username = var.admin_username
-  admin_password = var.admin_password
+  location            = var.location
+  size                = "Standard_B1s"
+  admin_username      = var.admin_username
+  admin_password      = var.admin_password
   disable_password_authentication = false
   network_interface_ids = [azurerm_network_interface.vm_nic.id]
 
   os_disk {
-    caching = "ReadWrite"
+    caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
-    name = "vm-web-osdisk"
+    name                 = "vm-web-osdisk"
   }
+
   source_image_reference {
-    
     publisher = "Canonical"
-    offer = "ubuntuServer"
-    sku = "18.04-LTS"
-    version = "latest"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
   }
-  
 }
 
