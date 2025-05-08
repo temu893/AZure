@@ -73,3 +73,4 @@ resource "azurerm_linux_virtual_machine" "web_vm" {
   }
 }
 
+
