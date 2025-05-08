@@ -24,40 +24,40 @@ module "network" {
 #PUBLIC IP FOR VM
 
 resource "azurerm_public_ip" "vm_ip" {
-  name = "vm-web-publicIp"
+  name                = "vm-web-publicIp"
   resource_group_name = azurerm_resource_group.rg.name
-  location = var.location
-  allocation_method = "Static"
-  sku = "Basic"
-  
+  location            = var.location
+  allocation_method   = "Static"
+  sku                 = "Basic"
+
 }
 
 #NETWORK INTERFACE FOR VM
 
 resource "azurerm_network_interface" "vm_nic" {
-  name = "vm-web-nic"
-  location = var.location
+  name                = "vm-web-nic"
+  location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
   ip_configuration {
-    name = "webipconfig"
-    subnet_id = modules.network.web_subnet_id
+    name                          = "webipconfig"
+    subnet_id                     = modules.network.web_subnet_id
     private_ip_address_allocation = "Dymamic"
-    public_ip_address_id = azurerm_public_ip.vm_ip
+    public_ip_address_id          = azurerm_public_ip.vm_ip
   }
-  
+
 }
 
 # LINUX VM IN WEB SUBNET
 
 resource "azurerm_linux_virtual_machine" "web_vm" {
-  name                = "vm-web"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = var.location
-  size                = "Standard_B1s"
-  admin_username      = var.admin_username
-  admin_password      = var.admin_password
+  name                            = "vm-web"
+  resource_group_name             = azurerm_resource_group.rg.name
+  location                        = var.location
+  size                            = "Standard_B1s"
+  admin_username                  = var.admin_username
+  admin_password                  = var.admin_password
   disable_password_authentication = false
-  network_interface_ids = [azurerm_network_interface.vm_nic.id]
+  network_interface_ids           = [azurerm_network_interface.vm_nic.id]
 
   os_disk {
     caching              = "ReadWrite"
