@@ -40,7 +40,7 @@ resource "azurerm_network_interface" "vm_nic" {
   resource_group_name = azurerm_resource_group.rg.name
   ip_configuration {
     name                          = "webipconfig"
-    subnet_id                     = modules.network.web_subnet_id
+    subnet_id = module.network.web_subnet_id
     private_ip_address_allocation = "Dymamic"
     public_ip_address_id          = azurerm_public_ip.vm_ip
   }
