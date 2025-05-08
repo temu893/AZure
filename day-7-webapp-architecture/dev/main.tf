@@ -47,7 +47,7 @@ resource "azurerm_network_interface" "vm_nic" {
 
 }
 
-# LINUX VM IN WEB SUBNET 
+# LINUX VM IN WEB SUBNET
 
 resource "azurerm_linux_virtual_machine" "web_vm" {
   name                            = "vm-web"
