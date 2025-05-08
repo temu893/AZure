@@ -44,13 +44,7 @@ jobs:
 
 
       - name: Terraform Plan
-        run: |
-          terraform plan \
-            -var="subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}" \
-            -var="tenant_id=${{ secrets.ARM_TENANT_ID }}" \
-            -var="admin_ip=${{ secrets.ADMIN_IP }}" \
-            -var="admin_username=${{ secrets.ADMIN_USERNAME }}" \
-            -var="admin_password=${{ secrets.ADMIN_PASSWORD }}"
+        run: terraform plan 
       
 
       - name: Terraform Apply
