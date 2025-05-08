@@ -3,7 +3,10 @@ name: Terraform Prod CI/CD
 on:
   push:
     branches:
-      - main
+      - prod
+  pull_request:
+    branches:
+      - prod
 
 env:
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
@@ -40,19 +43,37 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        if: github.event_name == 'pull_request'
-        run: terraform plan
+        run: |
+          terraform plan \
+            -var="subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}" \
+            -var="tenant_id=${{ secrets.ARM_TENANT_ID }}" \
+            -var="admin_ip=${{ secrets.ADMIN_IP }}" \
+            -var="admin_username=${{ secrets.ADMIN_USERNAME }}" \
+            -var="admin_password=${{ secrets.ADMIN_PASSWORD }}" \
+            -var="vnet_cidr=10.0.0.0/16" \
+            -var="web_subnet_cidr=10.0.1.0/24" \
+            -var="app_subnet_cidr=10.0.2.0/24" \
+            -var="db_subnet_cidr=10.0.3.0/24" \
+            -var="resource_group_name=TemDevOps-Prod"
+      
+
+      
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/prod' && github.event_name == 'push'
         run: |
           terraform apply -auto-approve \
             -var="subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}" \
             -var="tenant_id=${{ secrets.ARM_TENANT_ID }}" \
             -var="admin_ip=${{ secrets.ADMIN_IP }}" \
             -var="admin_username=${{ secrets.ADMIN_USERNAME }}" \
-            -var="admin_password=${{ secrets.ADMIN_PASSWORD }}"
-        timeout-minutes: 15
+            -var="admin_password=${{ secrets.ADMIN_PASSWORD }}" \
+            -var="vnet_cidr=10.0.0.0/16" \
+            -var="web_subnet_cidr=10.0.1.0/24" \
+            -var="app_subnet_cidr=10.0.2.0/24" \
+            -var="db_subnet_cidr=10.0.3.0/24" \
+            -var="resource_group_name=TemDevOps-Prod"
+        timeout-minutes: 20
       
       
       
