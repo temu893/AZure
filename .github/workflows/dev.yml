@@ -39,9 +39,23 @@ jobs:
       - name: Terraform Format Check
         run: terraform fmt -check
 
+      - name: Terraform Validate
+        run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -var-file="terraform.tfvars"
+        run: |
+          terraform plan \
+            -var="subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}" \
+            -var="tenant_id=${{ secrets.ARM_TENANT_ID }}" \
+            -var="admin_ip=${{ secrets.ADMIN_IP }}" \
+            -var="admin_username=${{ secrets.ADMIN_USERNAME }}" \
+            -var="admin_password=${{ secrets.ADMIN_PASSWORD }}" \
+            -var="vnet_cidr=10.0.0.0/16" \
+            -var="web_subnet_cidr=10.0.1.0/24" \
+            -var="app_subnet_cidr=10.0.2.0/24" \
+            -var="db_subnet_cidr=10.0.3.0/24" \
+            -var="resource_group_name=TemDevOps-Dev"
+      
 
       
 
