@@ -21,7 +21,7 @@ module "network" {
   admin_ip            = var.admin_ip
 }
 
-#PUBLIC IP FOR VM
+#PUBLIC IP FOR VM 
 
 resource "azurerm_public_ip" "vm_ip" {
   name                = "vm-web-publicIp"
