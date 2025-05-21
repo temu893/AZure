@@ -1,0 +1,51 @@
+name: Terraform Drift Detection
+
+on:
+  schedule:
+    - cron: '0 3 * * 3'  # Every Monday at 6am UTC
+  workflow_dispatch:     # Allow manual runs
+
+jobs:
+  detect-drift:
+    name: Check Drift in Dev
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.7
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+    - name: Terraform Init
+      run: terraform init
+      working-directory: ./dev
+
+    - name: Terraform Validate
+      run: terraform validate
+      working-directory: ./dev
+
+    - name: Terraform Plan (Drift Check)
+      run: |
+        terraform plan -detailed-exitcode -no-color || exit_code=$?
+        if [ "$exit_code" == "2" ]; then
+          echo "❌ Drift detected!"
+          exit 1
+        elif [ "$exit_code" == "1" ]; then
+          echo "❌ Terraform plan failed"
+          exit 1
+        else
+          echo "✅ No drift detected"
+        fi
+      working-directory: ./dev
